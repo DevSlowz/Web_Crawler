@@ -4,9 +4,15 @@
   "description": "Node.js Web Crawler application that generates an \"internal links\" report for any website on the internet by crawling each page of the site.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "start": "node main.js",
+  },
+  "jest":{
+    "transform": {}
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
