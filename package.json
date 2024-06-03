@@ -1,0 +1,12 @@
+{
+  "name": "web_crawler",
+  "version": "1.0.0",
+  "description": "Node.js Web Crawler application that generates an \"internal links\" report for any website on the internet by crawling each page of the site.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
