@@ -29,9 +29,17 @@ function getURLsFromHTML(htmlBody, baseURL) {
     const dom = new JSDOM(htmlBody)
     const anchorElements = dom.window.document.querySelectorAll('a')
     
-    anchorElements.forEach(link => {
-        let href = link.getAttribute('href')
-        links.push(`${baseURL}${href}`)
+    anchorElements.forEach(anchor => {
+        if (anchor.hasAttribute('href')) {
+            let href = anchor.getAttribute('href')
+            try {
+                // convert any relative URLs to absolute URLs
+                href = new URL(href, baseURL).href
+                links.push(href)
+            } catch (error) {
+                console.log(`${error.message}: ${href}`)
+            }
+        }
     });
     
     return links
