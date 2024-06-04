@@ -46,7 +46,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
     return links
 }
 
-async function crawlPage(currentURL) {
+async function crawlPage(baseURL, currentURL, pages) {
 
     let webpage
     // Attempt to fetch information from specified URL
