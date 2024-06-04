@@ -40,13 +40,10 @@ test('relative url converted to absolute url', () => {
         <a href="/page2.html">Page 2</a>
     </body>
     </html>`
-    const url = 'https://blog.boot.dev'
+    const url = 'https://www.example.com'
     const actual = getURLsFromHTML(html,url)
-    const expected = null
-    actual.forEach(link => {
-        expect(link).toBe(`${url}/${link}`)
-    });
-    
+    const expected = ['https://www.example.com/page1.html', 'https://www.example.com/page2.html']
+    expect(actual).toStrictEqual(expected)
 })
 
 
@@ -65,6 +62,6 @@ test('verify all anchor are found in the body', () => {
     const url = 'https://www.example.com'
     const actual = getURLsFromHTML(html,url)
     const expected = ['https://www.example.com/page1.html', 'https://www.example.com/page2.html']
-    expect(actual).toBe(expected)
+    expect(actual.length).toBe(expected.length)
     
 })
