@@ -46,7 +46,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
     return links
 }
 
-async function crawlPage(baseURL, currentURL, pages) {
+async function crawlPage(baseURL, currentURL = baseURL, pages = {}) {
 
     let webpage
     // Attempt to fetch information from specified URL
@@ -76,6 +76,57 @@ async function crawlPage(baseURL, currentURL, pages) {
     console.log(webpageContent)
 }
 
+async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
+    let count
+    let webpageContent
+    let URLs
+    let currentURLHost = new URL(currentURL)
+    // Verify currentURL is on the same domain as the baseURL
+    if (!currentURLHost.host === baseURL) {
+        return pages
+    }
+
+    // Normalized URL
+    normalURL = normalizeURL(currentURL)
+    if (pages.includes(normalURL)) {
+        count++
+        return pages
+    }
+
+    webpageContent = fetchAndParseHTML(currentURL)
+    URLs = getURLsFromHTML(webpageContent,currentURL)
+
+
+}
+
+async function fetchAndParseHTML(currentURL) {
+    let webpage
+    // Attempt to fetch information from specified URL
+    try {
+        webpage = await fetch(currentURL)
+    } catch (error) {
+        throw new Error(`Got Network error: ${error.message}`)
+    }
+    
+    // If the response from the fetch is equivalent to an error(>400) displaay to console
+    if (webpage.status >= 400) {
+        let err = new Error(`Got HTTP error: ${webpage.status} ${webpage.statusText}`)
+        console.log(err.message)
+        return 
+    }
+
+    // If the response from the fetch is not a valid type display error to console
+    if (!webpage.headers.get('Content-Type').includes('text/html')){
+        let err = new Error(`Got non-HTML response: ${contentType}`)
+        console.log(err.message)
+        return 
+    }
+
+    // Collect, Store, and display web content
+    const webpageContent = await webpage.text()
+    
+    return webpageContent
+}
 
 
 export { normalizeURL, getURLsFromHTML, crawlPage};
