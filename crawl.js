@@ -1,3 +1,4 @@
+import { JSDOM } from 'jsdom'
 function normalizeURL(url){
 // URL object
 // hostname 
@@ -21,6 +22,21 @@ function normalizeURL(url){
     return `${hostname}${path}`
 }
 
+function getURLsFromHTML(htmlBody, baseURL) {
+    // Returns list of all the link URLs - un-normalized
+    // Create an object of the DOM
+    const links = []
+    const dom = new JSDOM(htmlBody)
+    const anchorElements = dom.window.document.querySelectorAll('a')
+    
+    anchorElements.forEach(link => {
+        let href = link.getAttribute('href')
+        links.push(`${baseURL}${href}`)
+    });
+    
+    return links
+}
 
 
-export { normalizeURL };
+
+export { normalizeURL, getURLsFromHTML};
