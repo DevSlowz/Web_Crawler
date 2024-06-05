@@ -13,7 +13,8 @@ async function main() {
     // console.log(process.argv[1])
   
     console.log(`starting crawl of: ${baseURL}...`)
-    await crawlPage(baseURL)
+    let data = await crawlPage(baseURL)
+    console.log(data)
   }
   
   main()
